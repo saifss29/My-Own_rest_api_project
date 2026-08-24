@@ -34,7 +34,7 @@ api = Api(app)
 
 api.register_blueprint(StoreBlueprint)
 api.register_blueprint(ItemBlueprint)
-print(app.url_map)
+
 
 
 if __name__ == "__main__":
