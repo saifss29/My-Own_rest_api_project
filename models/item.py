@@ -1,5 +1,6 @@
 from db import db
 
+
 class ItemModel(db.Model):
     __tablename__ = "items"
 
@@ -7,3 +8,4 @@ class ItemModel(db.Model):
     name = db.Column(db.String, unique=True, nullable=False)
     price = db.Column(db.Float(precision=2), nullable=False)
     store_id = db.Column(db.Integer, db.ForeignKey("stores.id"), nullable=False)
+    store = db.relationship("StoreModel", back_populates="items")

@@ -1,0 +1,8 @@
+services:
+  web:
+    image: rest-apis-flask-python
+    ports:
+      - "5000:5000"
+    working_dir: /app
+    volumes:
+      - .:/app

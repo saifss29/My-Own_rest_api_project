@@ -7,7 +7,12 @@ from models.store import StoreModel
 from models.item import ItemModel
 from resources.store import blp as StoreBlueprint
 from resources.item import blp as ItemBlueprint
+from resources.category import blp as CategoryBlueprint
+from resources.user import blp as UserBlueprint
+
 from config import DevelopmentConfig,ProductionConfig
+from flask_jwt_extended import JWTManager
+
 
 
 load_dotenv()
@@ -31,13 +36,14 @@ with app.app_context():
     db.create_all()
 
 api = Api(app)
+jwt = JWTManager(app)
 
 api.register_blueprint(StoreBlueprint)
 api.register_blueprint(ItemBlueprint)
-
+api.register_blueprint(CategoryBlueprint)
+api.register_blueprint(UserBlueprint)
 
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
 
-## Code Review
