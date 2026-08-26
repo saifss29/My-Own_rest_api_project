@@ -2,7 +2,7 @@ from flask.views import MethodView
 from flask_smorest import Blueprint, abort
 from passlib.hash import pbkdf2_sha256
 from flask_jwt_extended import create_access_token
-from flask_jwt_extended import jwt_required, get_jwt, create_refresh_token, get_jwt_identity,get_jwt_identity
+from flask_jwt_extended import jwt_required, get_jwt, create_refresh_token, get_jwt_identity
 from blocklist import BLOCKLIST
 
 
@@ -59,6 +59,8 @@ class RefreshToken(MethodView):
     def post(self):
         current_user = get_jwt_identity()
         new_token = create_refresh_token(identity=current_user, fresh=False)
+        jti = get_jwt()["jti"]
+        BLOCKLIST.add(jti)
         return{"access_token":new_token}
 
 

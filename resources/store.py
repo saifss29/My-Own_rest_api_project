@@ -46,9 +46,6 @@ class Store(MethodView):
             abort(500, message="An error occurred while updating/creating the store.")
                   
              
-           
-           
-          
 @blp.route("/store")
 class StoreList(MethodView):
 
@@ -64,17 +61,11 @@ class StoreList(MethodView):
                 message="A store with that name already exists."
             )
 
-        # category_id আলাদা করে নিচ্ছি
+        
         category_id = store_data.pop("category_id", None)
 
-        # # DEBUG: eta temporarily rakho
-        # print("STORE DATA:", store_data)
-        # print("CATEGORY ID:", category_id)
-
-        # ekhane category_id thakar kotha NA
         store = StoreModel(**store_data)
-
-        # category thakle many-to-many relationship create korchi
+        
         if category_id is not None:
             category = CategoryModel.query.get_or_404(category_id)
             store.categories.append(category)
@@ -91,6 +82,11 @@ class StoreList(MethodView):
             )
 
         return store
+           
+           
+          
+
+        
 
 
 
