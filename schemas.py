@@ -24,9 +24,9 @@ class StoreSchema(Schema):
     name = fields.Str(required=True)
     items = fields.Nested("ItemSchema", dump_only=True, many=True)
     categories = fields.Nested(CategorySchema, dump_only=True, many=True)
-    category_id = fields.Int( required=False, load_default=True)
+    category_id = fields.Int( required=False)
     
 class UserSchema(Schema):
     id = fields.Int(dump_only=True)
     username = fields.Str(required=True)
-    password = fields.Str(required=True)
+    password = fields.Str(required=True, load_only=True)
