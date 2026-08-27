@@ -10,6 +10,7 @@ from resources.item import blp as ItemBlueprint
 from resources.category import blp as CategoryBlueprint
 from resources.user import blp as UserBlueprint
 from blocklist import BLOCKLIST
+from flask_migrate import Migrate
 
 from config import DevelopmentConfig,ProductionConfig
 from flask_jwt_extended import JWTManager
@@ -35,6 +36,8 @@ print("DEBUG:", app.config["DEBUG"])
 db.init_app(app)
 with app.app_context():
     db.create_all()
+
+migrate = Migrate(app,db)
 
 api = Api(app)
 jwt = JWTManager(app)

@@ -5,3 +5,5 @@ marshmallow
 python-dotenv
 flask-jwt-extended
 passlib
+flask-migrate
+gunicorn
