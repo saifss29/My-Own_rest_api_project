@@ -20,7 +20,8 @@ def send_simple_message(to, subject, body, html):
             "from": f"Mailgun Sandbox <postmaster@{domain}>",
             "to": [to],
             "subject": subject,
-            "text": body
+            "text": body,
+            "html":html
         }
     )
 
