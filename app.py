@@ -14,12 +14,19 @@ from flask_migrate import Migrate
 
 from config import DevelopmentConfig,ProductionConfig
 from flask_jwt_extended import JWTManager
-
-
+import redis
+from rq import Queue
 
 load_dotenv()
+print("REDIS_URL:", os.getenv("REDIS_URL"))
 
-app = Flask(__name__)
+app= Flask(__name__)
+
+connection = redis.from_url(
+    os.getenv("REDIS_URL", "redis://localhost:6379")
+)
+app.extensions["queue"] = Queue("emails", connection=connection)
+
 
 env = os.getenv("FLASK_ENV", "development")
 
@@ -37,6 +44,8 @@ db.init_app(app)
 migrate = Migrate(app,db)
 
 api = Api(app)
+
+
 jwt = JWTManager(app)
 
 @jwt.token_in_blocklist_loader
