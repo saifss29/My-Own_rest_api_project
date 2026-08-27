@@ -34,9 +34,6 @@ print("DEBUG:", app.config["DEBUG"])
 
 
 db.init_app(app)
-with app.app_context():
-    db.create_all()
-
 migrate = Migrate(app,db)
 
 api = Api(app)
