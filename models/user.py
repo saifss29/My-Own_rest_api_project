@@ -1,0 +1,8 @@
+from db import db
+
+
+class UserModel(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80), unique = True, nullable = True)
+    password = db.Column(db.String(80), nullable= True)
+    email = db.Column(db.String, unique=True, nullable= False)

@@ -3,3 +3,11 @@ flask-smorest
 Flask-SQLAlchemy
 marshmallow
 python-dotenv
+flask-jwt-extended
+passlib
+flask-migrate
+gunicorn
+psycopg2-binary
+requests
+rq
+redis

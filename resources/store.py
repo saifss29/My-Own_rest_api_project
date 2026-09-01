@@ -2,6 +2,7 @@ from flask.views import MethodView
 from flask_smorest import Blueprint, abort
 from db import db
 from models.store import StoreModel
+from models.category import CategoryModel
 from schemas import StoreSchema
 
 blp = Blueprint("stores", __name__, description="Operations on stores")
@@ -32,35 +33,60 @@ class Store(MethodView):
           else:
             store = StoreModel(**store_data)
 
+          if "category_id" in store_data:
+             category = CategoryModel.query.get_or_404(store_data["category_id"])
+             store.categories.append(category)
+
           try:
            db.session.add(store)
            db.session.commit()
            return store
           except Exception:
+            db.session.rollback()
             abort(500, message="An error occurred while updating/creating the store.")
                   
              
-           
-           
-          
 @blp.route("/store")
 class StoreList(MethodView):
+
     @blp.arguments(StoreSchema)
     @blp.response(201, StoreSchema)
     def post(self, store_data):
-        if StoreModel.query.filter(StoreModel.name == store_data["name"]).first():
-            abort(409, message="A store with that name already exists.")
+
+        if StoreModel.query.filter(
+            StoreModel.name == store_data["name"]
+        ).first():
+            abort(
+                409,
+                message="A store with that name already exists."
+            )
+
+        
+        category_id = store_data.pop("category_id", None)
 
         store = StoreModel(**store_data)
+        
+        if category_id is not None:
+            category = CategoryModel.query.get_or_404(category_id)
+            store.categories.append(category)
+
         try:
             db.session.add(store)
             db.session.commit()
+
         except Exception:
-            abort(500, message="An error occurred while creating the store.")
+            db.session.rollback()
+            abort(
+                500,
+                message="An error occurred while creating the store."
+            )
 
         return store
-    
+           
+           
+          
 
+        
 
 
 
