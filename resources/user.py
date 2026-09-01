@@ -18,7 +18,7 @@ from models.user import UserModel
 
 
 
-blp = Blueprint("tags", __name__, description= "Operation on tags")
+blp = Blueprint("users", __name__, description= "Operation on tags")
 
 
 
