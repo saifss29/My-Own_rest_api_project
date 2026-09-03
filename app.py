@@ -12,12 +12,13 @@ from resources.user import blp as UserBlueprint
 from blocklist import BLOCKLIST
 from flask_migrate import Migrate
 
-from config import DevelopmentConfig,ProductionConfig
 from flask_jwt_extended import JWTManager
 import redis
 from rq import Queue
-
 load_dotenv()
+from config import DevelopmentConfig,ProductionConfig
+
+
 print("REDIS_URL:", os.getenv("REDIS_URL"))
 
 app= Flask(__name__)
